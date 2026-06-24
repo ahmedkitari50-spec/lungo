@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lungo Coffee — Café & Poterie — Agadir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ==========================================================================
+     RESET & VARIABLES
+     ========================================================================== */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg-light: #FAF8F5;        /* Blanc cassé très élégant */
+    --bg-dark: #131211;         /* Noir profond chaud (café de spécialité) */
+    --text-dark: #23211F;       /* Anthracite */
+    --text-muted: #8A847C;      /* Gris chaud */
+    --text-light: #FAF8F5;      /* Blanc cassé pour fond sombre */
+    --accent: #C4B5A0;          /* Ton sable / café au lait */
+    --accent-clay: #C08A75;     /* Ton terre cuite / poterie artisanale */
+    --border-light: rgba(35, 33, 31, 0.08);
+    --border-dark: rgba(250, 248, 245, 0.08);
+    
+    --space-sm: 24px;
+    --space-md: 60px;
+    --space-lg: 120px;
+    --space-xl: 180px;
+    
+    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--accent-clay);
+    color: var(--bg-light);
+  }
+
+  /* ==========================================================================
+     TYPOGRAPHY & UTILITIES
+     ========================================================================== */
+  h1, h2, h3, h4, .serif {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.15;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+  }
+
+  /* Buttons & Interactions */
+  .btn-minimal {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 14px 28px;
+    border: 1px solid var(--text-dark);
+    background: transparent;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .btn-minimal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--text-dark);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+  }
+
+  .btn-minimal:hover {
+    color: var(--bg-light);
+  }
+
+  .btn-minimal:hover::before {
+    transform: scaleY(1);
+  }
+
+  .btn-minimal.dark-mode {
+    border-color: var(--text-light);
+    color: var(--text-light);
+  }
+
+  .btn-minimal.dark-mode::before {
+    background-color: var(--text-light);
+  }
+
+  .btn-minimal.dark-mode:hover {
+    color: var(--bg-dark);
+  }
+
+  /* ==========================================================================
+     NAVIGATION
+     ========================================================================== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 32px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+  }
+
+  nav.scrolled {
+    background: rgba(250, 248, 245, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 20px 5%;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    z-index: 101;
+    position: relative;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    color: var(--text-dark);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--accent-clay);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .nav-cta {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background-color: var(--text-dark);
+    color: var(--bg-light);
+    padding: 10px 20px;
+    border-radius: 0px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+
+  .nav-cta:hover {
+    background-color: var(--accent-clay);
+    transform: translateY(-2px);
+  }
+
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--text-dark);
+    z-index: 101;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ==========================================================================
+     HERO SECTION
+     ========================================================================== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--space-xl) 5% var(--space-lg);
+    text-align: center;
+    background: radial-gradient(circle at 50% 30%, rgba(192, 138, 117, 0.04) 0%, transparent 70%);
+  }
+
+  .hero-logo-badge {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 40px;
+    animation: spin 35s linear infinite;
+  }
+
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
+  }
+
+  .logo-badge-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-title {
+    font-size: clamp(45px, 11vw, 140px);
+    letter-spacing: -0.03em;
+    margin-bottom: 30px;
+    color: var(--text-dark);
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent-clay);
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Status Indicator */
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(35, 33, 31, 0.03);
+    border: 1px solid var(--border-light);
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-dark);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #2e7d32; /* default open green */
+    display: inline-block;
+  }
+
+  .status-dot.closed {
+    background-color: #c62828;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--text-muted), transparent);
+    animation: scrollDrop 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    transform-origin: top;
+  }
+
+  @keyframes scrollDrop {
+    0% { transform: scaleY(0); opacity: 0; }
+    50% { transform: scaleY(1); opacity: 1; }
+    100% { transform: translateY(50px) scaleY(0); opacity: 0; }
+  }
+
+  /* ==========================================================================
+     INTERACTIVE STORY & PHILOSOPHY
+     ========================================================================== */
+  .philosophy {
+    padding: var(--space-xl) 5%;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .philosophy-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+
+  .philosophy-tab-btn {
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: var(--transition-smooth);
+    position: relative;
+  }
+
+  .philosophy-tab-btn.active {
+    color: var(--accent-clay);
+    font-weight: 400;
+  }
+
+  .philosophy-tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%; width: 0; height: 1px;
+    background-color: var(--accent-clay);
+    transition: var(--transition-smooth);
+    transform: translateX(-50%);
+  }
+
+  .philosophy-tab-btn.active::after {
+    width: 40px;
+  }
+
+  .philosophy-content {
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .philosophy-pane {
+    display: none;
+    max-width: 750px;
+    animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .philosophy-pane.active {
+    display: block;
+  }
+
+  .philosophy-pane h2 {
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.2;
+    margin-bottom: 30px;
+  }
+
+  .philosophy-pane h2 em {
+    font-style: italic;
+    color: var(--accent-clay);
+  }
+
+  .philosophy-pane p {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ==========================================================================
+     MENU SECTION WITH INTERACTIVE FILTERS
+     ========================================================================== */
+  .menu-section {
+    padding: var(--space-xl) 5%;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    position: relative;
+  }
+
+  .menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .menu-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .menu-header h2 {
+    font-size: clamp(48px, 8vw, 90px);
+    margin: 12px 0;
+  }
+
+  /* Filter Tabs */
+  .menu-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 80px;
+  }
+
+  .menu-filter-btn {
+    background: transparent;
+    border: 1px solid rgba(250, 248, 245, 0.15);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+
+  .menu-filter-btn:hover, .menu-filter-btn.active {
+    background-color: var(--text-light);
+    color: var(--bg-dark);
+    border-color: var(--text-light);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 100px;
+    transition: var(--transition-smooth);
+  }
+
+  .menu-category {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .menu-category.hidden {
+    display: none;
+  }
+
+  .menu-category-name {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-dark);
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .menu-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    background-color: var(--bg-dark);
+    padding-right: 16px;
+    z-index: 1;
+    transition: var(--transition-smooth);
+  }
+
+  .menu-item:hover .menu-item-name {
+    color: var(--accent-clay);
+    transform: translateX(4px);
+  }
+
+  .menu-item-price {
+    font-size: 14px;
+    color: var(--accent);
+    background-color: var(--bg-dark);
+    padding-left: 16px;
+    z-index: 1;
+  }
+
+  .menu-item-dots {
+    position: absolute;
+    left: 0; right: 0; bottom: 8px;
+    border-bottom: 1px dotted var(--border-dark);
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .menu-dessert-note {
+    grid-column: 1 / -1;
+    margin-top: 60px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--text-muted);
+    padding: 50px;
+    border: 1px solid var(--border-dark);
+  }
+
+  .menu-dessert-note span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-top: 20px;
+    color: rgba(250, 248, 245, 0.4);
+  }
+
+  /* ==========================================================================
+     ATELIER & CRAFT SECTION
+     ========================================================================== */
+  .atelier {
+    padding: var(--space-xl) 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 8vw;
+    align-items: center;
+  }
+
+  .atelier-content {
+    order: 2;
+  }
+
+  .atelier-image-wrapper {
+    order: 1;
+    position: relative;
+    width: 100%;
+    padding-bottom: 110%; 
+    overflow: hidden;
+    background-color: #E8E5E1;
+  }
+
+  .atelier-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(10%) contrast(95%);
+    transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .atelier-image-wrapper:hover .atelier-image {
+    transform: scale(1.04);
+  }
+
+  .atelier-title {
+    font-size: clamp(44px, 5.5vw, 75px);
+    margin: 20px 0 32px;
+  }
+
+  .atelier-title em {
+    font-style: italic;
+    color: var(--accent-clay);
+  }
+
+  .atelier-body {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    line-height: 1.8;
+  }
+
+  .atelier-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .atelier-feature-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    margin-top: 10px;
+    color: var(--text-dark);
+  }
+
+  /* ==========================================================================
+     RESERVATION SLIDE-OUT DRAWER & DIALOGS
+     ========================================================================== */
+  .drawer-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(19, 18, 17, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  .drawer-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .drawer {
+    position: fixed;
+    top: 0; right: 0;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    background-color: var(--bg-light);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.05);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    overflow-y: auto;
+  }
+
+  .drawer.open {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .drawer-close {
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--text-muted);
+  }
+
+  .drawer-close:hover {
+    color: var(--text-dark);
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 12px 0;
+    color: var(--text-dark);
+    outline: none;
+    transition: var(--transition-smooth);
+    border-radius: 0;
+  }
+
+  .form-input:focus, .form-select:focus {
+    border-color: var(--accent-clay);
+  }
+
+  /* Custom Confirmation Modal */
+  .custom-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(19, 18, 17, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .custom-modal {
+    background-color: var(--bg-light);
+    max-width: 450px;
+    width: 90%;
+    padding: 40px;
+    text-align: center;
+    border-radius: 0;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    transform: scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .custom-modal-overlay.open .custom-modal {
+    transform: scale(1);
+  }
+
+  .modal-icon {
+    font-size: 32px;
+    color: var(--accent-clay);
+    margin-bottom: 20px;
+  }
+
+  .modal-title {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .modal-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  /* ==========================================================================
+     VISIT SECTION & MAP
+     ========================================================================== */
+  .visit {
+    padding: var(--space-xl) 5% 0;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .visit-title {
+    font-size: clamp(48px, 8vw, 90px);
+    margin-bottom: var(--space-lg);
+  }
+
+  .visit-title em {
+    color: var(--accent-clay);
+    font-style: italic;
+  }
+
+  .visit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto var(--space-lg);
+    text-align: left;
+  }
+
+  .visit-card-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    line-height: 1.4;
+    margin-top: 16px;
+  }
+
+  .visit-card-val a {
+    position: relative;
+    display: inline-block;
+  }
+
+  .visit-card-val a::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0;
+    width: 100%; height: 1px;
+    background-color: var(--accent-clay);
+    transition: opacity 0.3s;
+    opacity: 0.2;
+  }
+
+  .visit-card-val a:hover::after {
+    opacity: 1;
+  }
+
+  .visit-card-link-small {
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    margin-top: 16px;
+    display: inline-block;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-clay);
+    font-weight: 500;
+  }
+
+  .map-wrapper {
+    width: 100%;
+    height: 55vh;
+    min-height: 480px;
+    filter: grayscale(100%) contrast(90%) opacity(80%);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: #E8E5E1; 
+  }
+
+  .map-wrapper:hover {
+    filter: grayscale(20%) contrast(95%) opacity(100%);
+  }
+
+  .map-embed {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* ==========================================================================
+     FOOTER
+     ========================================================================== */
+  footer {
+    padding: var(--space-lg) 5% 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 60px;
+  }
+
+  .footer-social a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-style: italic;
+  }
+
+  .footer-social a:hover {
+    color: var(--accent-clay);
+    transform: translateY(-2px);
+  }
+
+  .footer-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  /* ==========================================================================
+     ANIMATIONS & REVEAL
+     ========================================================================== */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+
+  /* ==========================================================================
+     RESPONSIVE DESIGN
+     ========================================================================== */
+  @media (max-width: 1024px) {
+    .philosophy, .atelier {
+      gap: 5vw;
+    }
+    .menu-grid {
+      gap: 50px 60px;
+    }
+    .nav-right {
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --space-xl: 100px;
+      --space-lg: 80px;
+    }
+
+    nav {
+      padding: 24px 5%;
+    }
+
+    .nav-right {
+      display: none; /* Let mobile-menu handle it */
+    }
+
+    .mobile-toggle {
+      display: block;
+    }
+    
+    .nav-links {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: var(--bg-light);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+
+    .nav-links.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-links a {
+      font-size: 26px;
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* Floating action CTA button for mobile */
+    .mobile-floating-cta {
+      display: inline-block;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 90;
+      background-color: var(--accent-clay);
+      color: var(--bg-light);
+      padding: 14px 22px;
+      border-radius: 50px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      box-shadow: 0 10px 30px rgba(192, 138, 117, 0.3);
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .hero-logo-badge {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 30px;
+    }
+
+    .menu-filters {
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .menu-filter-btn {
+      padding: 8px 16px;
+      font-size: 9px;
+    }
+
+    .menu-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .menu-dessert-note {
+      padding: 40px 20px;
+    }
+
+    .atelier {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 40px;
+    }
+
+    .atelier-content {
+      order: -1;
+    }
+
+    .atelier-body {
+      margin: 0 auto 30px;
+    }
+
+    .visit-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 48px;
+    }
+
+    .visit-card-val a::after {
+      display: none;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: 32px;
+      text-align: center;
+    }
+
+    .drawer {
+      padding: 30px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .mobile-floating-cta {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Lungo</a>
+  
+  <div class="nav-right">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#decouvrir">L'Art</a></li>
+      <li><a href="#menu">La Carte</a></li>
+      <li><a href="#atelier">L'Atelier</a></li>
+      <li><a href="#visit">Nous Trouver</a></li>
+    </ul>
+    <button class="nav-cta" onclick="toggleDrawer(true)">Atelier Poterie</button>
+  </div>
+
+  <button class="mobile-toggle" id="mobile-toggle">Menu</button>
+</nav>
+
+<!-- MOBILE FLOATING CTA -->
+<button class="mobile-floating-cta" onclick="toggleDrawer(true)">Réserver 🏺</button>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo-badge fade-up">
+    <svg viewBox="0 0 200 200" class="logo-badge-svg">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="var(--text-muted)" stroke-width="0.5" stroke-dasharray="2, 4" />
+      <text x="100" y="110" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="42" font-weight="300" fill="var(--text-dark)">Lungo</text>
+      <text x="100" y="140" text-anchor="middle" font-family="'Inter', sans-serif" font-size="7" letter-spacing="0.4em" fill="var(--text-muted)">AGADIR</text>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-title fade-up delay-1">
+      L'art de<br><em>l'instant.</em>
+    </h1>
+    
+    <div class="hero-meta fade-up delay-2">
+      <p class="hero-sub">
+        Think Positive &nbsp;·&nbsp; وعوم بحرك
+      </p>
+      
+      <!-- Live Status Indicator -->
+      <div class="status-tag" id="live-status-container">
+        <span class="status-dot" id="live-status-dot"></span>
+        <span id="live-status-text">Vérification...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator fade-up delay-3">
+    <a href="#decouvrir" class="eyebrow" style="cursor: pointer;">Découvrir</a>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- INTERACTIVE PHILOSOPHY -->
+<section class="philosophy" id="decouvrir">
+  <div class="philosophy-tabs fade-up">
+    <button class="philosophy-tab-btn active" onclick="switchPhilosophyTab(0)">01. L'esprit</button>
+    <button class="philosophy-tab-btn" onclick="switchPhilosophyTab(1)">02. Le Grain</button>
+    <button class="philosophy-tab-btn" onclick="switchPhilosophyTab(2)">03. La Terre</button>
+  </div>
+
+  <div class="philosophy-content fade-up delay-1">
+    <!-- PANE 1 -->
+    <div class="philosophy-pane active" id="pane-0">
+      <span class="eyebrow">Notre Philosophie</span>
+      <h2>Moins,<br><em>c'est plus.</em></h2>
+      <p>
+        Chaque tasse, chaque détail et chaque instant sont d'une absolue limpidité. Nous croyons profondément en l'élégance de la simplicité et en la force du moment présent, pour vous offrir une expérience mémorable.
+      </p>
+    </div>
+
+    <!-- PANE 2 -->
+    <div class="philosophy-pane" id="pane-1">
+      <span class="eyebrow">L'excellence brute</span>
+      <h2>Le café à son<br><em>paroxysme.</em></h2>
+      <p>
+        Du terroir colombien de haute altitude aux notes florales d'Éthiopie, nos grains de café de spécialité sont sourcés de manière éthique, torréfiés sur mesure, puis infusés avec une précision artisanale pour exprimer chaque nuance aromatique.
+      </p>
+    </div>
+
+    <!-- PANE 3 -->
+    <div class="philosophy-pane" id="pane-2">
+      <span class="eyebrow">Tactile & Terrestre</span>
+      <h2>Mettre les mains<br><em>dans l'argile.</em></h2>
+      <p>
+        Plus qu'un coffee shop : un espace d'argile brute. Le rituel de déguster un café s'unit naturellement à l'expérience ancestrale de la poterie. Chaque contenant chez Lungo raconte l'histoire tactile de la terre travaillée à la main.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU WITH CATEGORY FILTERING -->
+<section class="menu-section" id="menu">
+  <div class="menu-container">
+    <div class="menu-header fade-up">
+      <span class="eyebrow">La Sélection</span>
+      <h2>Notre Carte</h2>
+      <span class="eyebrow" style="color: var(--text-muted); margin-top: 10px;">Prix en MAD · Lun–Dim</span>
+    </div>
+
+    <!-- Category Filter Controls -->
+    <div class="menu-filters fade-up delay-1">
+      <button class="menu-filter-btn active" onclick="filterMenu('all')">Tout</button>
+      <button class="menu-filter-btn" onclick="filterMenu('espresso')">Espresso Bar</button>
+      <button class="menu-filter-btn" onclick="filterMenu('v60')">V60 Pure Origine</button>
+      <button class="menu-filter-btn" onclick="filterMenu('hot')">Chauds</button>
+      <button class="menu-filter-btn" onclick="filterMenu('iced')">Glacés</button>
+    </div>
+
+    <div class="menu-grid" id="menu-grid">
+      <!-- V60 -->
+      <div class="menu-category fade-up" data-category="v60">
+        <h3 class="menu-category-name">V60 — Pure Origine</h3>
+        <div class="menu-item"><span class="menu-item-name">Colombie</span><span class="menu-item-dots"></span><span class="menu-item-price">30</span></div>
+        <div class="menu-item"><span class="menu-item-name">Kenya</span><span class="menu-item-dots"></span><span class="menu-item-price">30</span></div>
+        <div class="menu-item"><span class="menu-item-name">Éthiopie</span><span class="menu-item-dots"></span><span class="menu-item-price">30</span></div>
+      </div>
+
+      <!-- ESPRESSO -->
+      <div class="menu-category fade-up" data-category="espresso">
+        <h3 class="menu-category-name">Espresso Bar</h3>
+        <div class="menu-item"><span class="menu-item-name">Espresso</span><span class="menu-item-dots"></span><span class="menu-item-price">18</span></div>
+        <div class="menu-item"><span class="menu-item-name">Double Espresso</span><span class="menu-item-dots"></span><span class="menu-item-price">25</span></div>
+        <div class="menu-item"><span class="menu-item-name">Americano</span><span class="menu-item-dots"></span><span class="menu-item-price">18</span></div>
+        <div class="menu-item"><span class="menu-item-name">Espresso Macchiato</span><span class="menu-item-dots"></span><span class="menu-item-price">18</span></div>
+        <div class="menu-item"><span class="menu-item-name">Flat White</span><span class="menu-item-dots"></span><span class="menu-item-price">25</span></div>
+        <div class="menu-item"><span class="menu-item-name">Cappuccino</span><span class="menu-item-dots"></span><span class="menu-item-price">22</span></div>
+        <div class="menu-item"><span class="menu-item-name">Latte</span><span class="menu-item-dots"></span><span class="menu-item-price">22</span></div>
+        <div class="menu-item"><span class="menu-item-name">Cortado</span><span class="menu-item-dots"></span><span class="menu-item-price">25</span></div>
+      </div>
+
+      <!-- HOT DRINKS -->
+      <div class="menu-category fade-up" data-category="hot">
+        <h3 class="menu-category-name">Boissons Chaudes</h3>
+        <div class="menu-item"><span class="menu-item-name">Matcha Traditionnel</span><span class="menu-item-dots"></span><span class="menu-item-price">30</span></div>
+        <div class="menu-item"><span class="menu-item-name">Matcha Latte</span><span class="menu-item-dots"></span><span class="menu-item-price">33</span></div>
+        <div class="menu-item"><span class="menu-item-name">Thé Marocain</span><span class="menu-item-dots"></span><span class="menu-item-price">18</span></div>
+        <div class="menu-item"><span class="menu-item-name">Chai Latte</span><span class="menu-item-dots"></span><span class="menu-item-price">25</span></div>
+      </div>
+
+      <!-- ICED -->
+      <div class="menu-category fade-up" data-category="iced">
+        <h3 class="menu-category-name">Boissons Glacées</h3>
+        <div class="menu-item"><span class="menu-item-name">Iced Matcha</span><span class="menu-item-dots"></span><span class="menu-item-price">35</span></div>
+        <div class="menu-item"><span class="menu-item-name">Iced Spanish Latte</span><span class="menu-item-dots"></span><span class="menu-item-price">35</span></div>
+        <div class="menu-item"><span class="menu-item-name">Iced Latte</span><span class="menu-item-dots"></span><span class="menu-item-price">32</span></div>
+        <div class="menu-item"><span class="menu-item-name">Iced Americano</span><span class="menu-item-dots"></span><span class="menu-item-price">30</span></div>
+      </div>
+
+      <div class="menu-dessert-note fade-up" id="menu-pastry-note">
+        L'artisanat dans chaque bouchée.
+        <span>Les créations sucrées & pâtisseries du jour sont présentées au comptoir.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATELIER (COFFEE & CLAY WORKSHOPS) -->
+<section id="atelier" class="atelier">
+  <div class="atelier-image-wrapper fade-up">
+    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=1200" alt="Intérieur de l'Atelier Lungo Coffee" class="atelier-image" loading="lazy">
+  </div>
+  <div class="atelier-content fade-up delay-1">
+    <span class="eyebrow">Le lieu & l'expérience</span>
+    <h2 class="atelier-title">
+      L'espace<br><em>Atelier Poterie</em>
+    </h2>
+    <p class="atelier-body">
+      Un havre sensoriel pour ralentir le temps. Chez Lungo, le rituel du café s’exprime aussi à travers la matière. Participez à nos séances d'initiation au tour de potier ou profitez simplement d'une atmosphère calme propice à la création et à l'échange.
+    </p>
+    
+    <div class="atelier-details">
+      <div>
+        <span class="eyebrow">Concept unique</span>
+        <div class="atelier-feature-val">Spécialité & Terre</div>
+      </div>
+      <div>
+        <span class="eyebrow">Ateliers</span>
+        <div class="atelier-feature-val">Sur Réservation</div>
+      </div>
+    </div>
+
+    <button class="btn-minimal" onclick="toggleDrawer(true)">Réserver une Session</button>
+  </div>
+</section>
+
+<!-- INTERACTIVE BOOKING DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
+<div class="drawer" id="booking-drawer">
+  <div class="drawer-header">
+    <h3 class="serif" style="font-size: 28px;">Votre Session</h3>
+    <button class="drawer-close" onclick="toggleDrawer(false)">Fermer</button>
+  </div>
+  
+  <form id="booking-form" onsubmit="handleBookingSubmit(event)">
+    <div class="form-group">
+      <label class="form-label">Type d'expérience</label>
+      <select class="form-select" required id="booking-type">
+        <option value="" disabled selected>Sélectionnez une option</option>
+        <option value="poterie">Atelier Poterie d'Initiation (1h30)</option>
+        <option value="degustation">Atelier Dégustation Café de Spécialité (1h00)</option>
+        <option value="table">Réserver un moment de détente au bar (2 personnes)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nom Complet</label>
+      <input type="text" class="form-input" placeholder="Yassine Alaoui" required id="booking-name">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Adresse E-mail</label>
+      <input type="email" class="form-input" placeholder="yassine@example.com" required id="booking-email">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Date souhaitée</label>
+      <input type="date" class="form-input" required id="booking-date">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nombre de personnes</label>
+      <select class="form-select" id="booking-guests">
+        <option value="1">1 Personne</option>
+        <option value="2">2 Personnes</option>
+        <option value="3">3 Personnes</option>
+        <option value="4">4 Personnes et plus</option>
+      </select>
+    </div>
+
+    <div class="form-group" style="margin-top: 40px;">
+      <button type="submit" class="btn-minimal" style="width: 100%; justify-content: center;">Confirmer ma Demande</button>
+    </div>
+  </form>
+</div>
+
+<!-- CUSTOM MODAL CONFIRMATION (REPLACES ALERT) -->
+<div class="custom-modal-overlay" id="custom-modal-overlay">
+  <div class="custom-modal">
+    <div class="modal-icon">🏺</div>
+    <h3 class="modal-title serif" id="modal-title">Demande Reçue</h3>
+    <p class="modal-text" id="modal-text">Votre demande de réservation a été envoyée avec succès. Nous vous recontacterons par email dans les plus brefs délais pour valider votre heure de passage.</p>
+    <button class="btn-minimal" onclick="closeModal()">Fermer la fenêtre</button>
+  </div>
+</div>
+
+<!-- VISIT & LOCATION -->
+<section class="visit" id="visit">
+  <h2 class="visit-title serif fade-up">Venez <em>nous trouver</em></h2>
+  
+  <div class="visit-grid fade-up delay-1">
+    <div>
+      <span class="eyebrow">Adresse</span>
+      <div class="visit-card-val">
+        Agadir, Maroc<br>
+        <a href="https://maps.app.goo.gl/WMa9mFAQesd7Jtfm6" target="_blank" class="visit-card-link-small">Ouvrir la carte ↗</a>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow">Ouverture</span>
+      <div class="visit-card-val">Lundi – Dimanche<br><span style="color: var(--accent-clay); font-size: 20px;" id="operating-hours">8:00 – 19:00</span></div>
+    </div>
+    <div>
+      <span class="eyebrow">Contact</span>
+      <div class="visit-card-val">
+        <a href="tel:+212668988579">06 68 98 85 79</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-wrapper fade-up">
+    <iframe
+      class="map-embed"
+      src="https://maps.google.com/maps?q=Lungo%20Coffee,%20Agadir,%20Morocco&t=&z=15&ie=UTF8&iwloc=&output=embed"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Localisation Lungo Coffee à Agadir"
+    ></iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-social fade-up">
+    <a href="https://www.instagram.com/lungo.coffee.morocco/" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@lungo.coffee.morocco" target="_blank">TikTok</a>
+  </div>
+  
+  <div class="footer-bottom fade-up delay-1">
+    <span class="eyebrow">© 2026 Lungo Coffee</span>
+    <span class="nav-logo" style="font-size: 20px; letter-spacing: 0.1em; color: var(--accent-clay);">Lungo</span>
+    <span class="eyebrow">وعوم بحرك</span>
+  </div>
+</footer>
+
+<script>
+  /* ==========================================================================
+     INTERSECTION OBSERVER (SCROLL REVEAL)
+     ========================================================================== */
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.08
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); 
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-up').forEach((element) => {
+    observer.observe(element);
+  });
+
+  /* ==========================================================================
+     NAVBAR STATE ON SCROLL
+     ========================================================================== */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  /* ==========================================================================
+     MOBILE NAVIGATION OVERLAY
+     ========================================================================== */
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const navLinks = document.getElementById('nav-links');
+  const links = navLinks.querySelectorAll('a');
+
+  mobileToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    if (navLinks.classList.contains('active')) {
+      mobileToggle.textContent = 'Fermer';
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileToggle.textContent = 'Menu';
+      document.body.style.overflow = '';
+    }
+  });
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      mobileToggle.textContent = 'Menu';
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ==========================================================================
+     DYNAMIC OPERATING STATUS & TIMER (Moroccan Time Context)
+     ========================================================================== */
+  function updateLiveStatus() {
+    const statusText = document.getElementById('live-status-text');
+    const statusDot = document.getElementById('live-status-dot');
+    
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    
+    const openingHour = 8;
+    const closingHour = 19;
+    
+    if (currentHour >= openingHour && currentHour < closingHour) {
+      const remainingHours = closingHour - 1 - currentHour;
+      const remainingMinutes = 60 - currentMinute;
+      
+      statusDot.classList.remove('closed');
+      
+      if (remainingHours === 0) {
+        statusText.innerHTML = `Ouvert · Fermeture imminente (dans ${remainingMinutes} min)`;
+      } else {
+        statusText.innerHTML = `Ouvert en ce moment · Ferme à 19h00`;
+      }
+    } else {
+      statusDot.classList.add('closed');
+      statusText.innerHTML = `Fermé · Réouverture demain à 08h00`;
+    }
+  }
+
+  // Initial call and periodic check
+  updateLiveStatus();
+  setInterval(updateLiveStatus, 60000);
+
+  /* ==========================================================================
+     INTERACTIVE PHILOSOPHY SWITCHER (Tabs)
+     ========================================================================== */
+  function switchPhilosophyTab(tabIndex) {
+    const buttons = document.querySelectorAll('.philosophy-tab-btn');
+    const panes = document.querySelectorAll('.philosophy-pane');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    panes.forEach(pane => pane.classList.remove('active'));
+    
+    buttons[tabIndex].classList.add('active');
+    document.getElementById(`pane-${tabIndex}`).classList.add('active');
+  }
+
+  /* ==========================================================================
+     INTERACTIVE MENU FILTERS
+     ========================================================================== */
+  function filterMenu(category) {
+    const filterButtons = document.querySelectorAll('.menu-filter-btn');
+    filterButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('onclick').includes(category)) {
+        btn.classList.add('active');
+      }
+    });
+
+    const categories = document.querySelectorAll('.menu-category');
+    const pastryNote = document.getElementById('menu-pastry-note');
+    
+    categories.forEach(cat => {
+      cat.style.opacity = '0';
+      cat.style.transform = 'translateY(15px)';
+      
+      setTimeout(() => {
+        if (category === 'all' || cat.getAttribute('data-category') === category) {
+          cat.classList.remove('hidden');
+          setTimeout(() => {
+            cat.style.opacity = '1';
+            cat.style.transform = 'translateY(0)';
+          }, 50);
+        } else {
+          cat.classList.add('hidden');
+        }
+      }, 300);
+    });
+
+    setTimeout(() => {
+      if (category === 'all') {
+        pastryNote.style.display = 'block';
+        setTimeout(() => { pastryNote.style.opacity = '1'; }, 50);
+      } else {
+        pastryNote.style.display = 'none';
+      }
+    }, 300);
+  }
+
+  /* ==========================================================================
+     RESERVATION DRAWER ACTIONS & VALIDATION
+     ========================================================================== */
+  const drawerOverlay = document.getElementById('drawer-overlay');
+  const bookingDrawer = document.getElementById('booking-drawer');
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('booking-date').setAttribute('min', today);
+
+  function toggleDrawer(isOpen) {
+    if (isOpen) {
+      drawerOverlay.classList.add('open');
+      bookingDrawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawerOverlay.classList.remove('open');
+      bookingDrawer.classList.remove('open');
+      if (!navLinks.classList.contains('active')) {
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  function handleBookingSubmit(event) {
+    event.preventDefault();
+
+    const expType = document.getElementById('booking-type').options[document.getElementById('booking-type').selectedIndex].text;
+    const name = document.getElementById('booking-name').value;
+    const email = document.getElementById('booking-email').value;
+    const date = new Date(document.getElementById('booking-date').value).toLocaleDateString('fr-FR', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+    const guests = document.getElementById('booking-guests').value;
+
+    toggleDrawer(false);
+
+    document.getElementById('modal-title').textContent = "Demande Enregistrée";
+    document.getElementById('modal-text').innerHTML = `Merci <strong>${name}</strong> ! Votre demande pour l'<strong>${expType}</strong> (pour ${guests} personne(s) le ${date}) a bien été transmise à notre équipe artisanale d'Agadir.<br><br>Un email de confirmation contenant votre créneau horaire définitif a été envoyé à : <em>${email}</em>.`;
+
+    openModal();
+    document.getElementById('booking-form').reset();
+  }
+
+  /* ==========================================================================
+     CUSTOM MODAL HANDLERS
+     ========================================================================== */
+  const modalOverlay = document.getElementById('custom-modal-overlay');
+
+  function openModal() {
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
